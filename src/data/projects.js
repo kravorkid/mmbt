@@ -11,7 +11,7 @@ export const projects = {
     client: 'Screaming Beans',
     description:
       'A brutal exploration of visual tension through black-and-white compositions. The project distorts everyday symbols — coffee, consumption, desire — into something unsettling and visceral. Between fetish and discomfort, each visual plays with contrast, repetition, and raw typography to create an immediate emotional response. No storytelling, no explanation — just impact.',
-    year: 'MMXXIV',
+    year: '',
     category: 'Art Direction',
     tags: ['branding', 'visual identity', 'experimental', 'print'],
     images: [
@@ -67,7 +67,7 @@ export const projects = {
     client: 'SAKAMARA',
     description:
       'MMBT created the first campaign for SAKAMARA. Built for fighters. Shaped with artists.',
-    year: 'MMXXIV',
+    year: '',
     category: 'Art Direction',
     tags: ['campaign', 'fashion', 'sportswear', 'jiu-jitsu', 'branding', 'photography'],
     images: [

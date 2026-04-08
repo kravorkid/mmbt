@@ -5,7 +5,7 @@
       enter-active-class="animated fadeInDown"
       leave-active-class="animated fadeOutUp"
     >
-      <q-header class="mmbt-header">
+      <q-header v-show="!introStore.shouldShowIntro" class="mmbt-header">
         <div class="container">
           <q-toolbar class="mmbt-toolbar items-start">
             <q-toolbar-title class="mmbt-logo">
@@ -77,7 +77,7 @@
         </transition>
       </router-view>
     </q-page-container>
-    <q-footer>
+    <q-footer v-show="!introStore.shouldShowIntro">
       <AppFooter />
     </q-footer>
   </q-layout>
@@ -86,14 +86,17 @@
 <script setup>
 import { ref } from 'vue'
 import AppFooter from 'components/AppFooter.vue'
+import { useIntroStore } from 'stores/intro-store'
 
 const drawerOpen = ref(false)
+const introStore = useIntroStore()
 </script>
 
 <style scoped lang="scss">
 .mmbt-header {
   background: $mmbt-beige;
   box-shadow: none;
+  padding: 1rem 0;
 }
 
 .mmbt-toolbar {
@@ -102,11 +105,9 @@ const drawerOpen = ref(false)
 }
 
 .mmbt-logo {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  flex: 0 0 auto;
-  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .mmbt-logo-link {
@@ -123,6 +124,10 @@ const drawerOpen = ref(false)
   height: 2.5rem;
   width: auto;
   display: block;
+
+  @media (max-width: $breakpoint-sm-max) {
+    height: 1.3rem;
+  }
 }
 
 .mmbt-nav {

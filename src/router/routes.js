@@ -9,6 +9,11 @@ const routes = [
         name: 'project-id',
         component: () => import('pages/ProjectDetail.vue'),
       },
+      {
+        path: 'contact',
+        name: 'contact',
+        component: () => import('pages/ContactPage.vue'),
+      },
     ],
   },
 

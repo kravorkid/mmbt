@@ -96,14 +96,16 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useMeta } from 'quasar'
 import { getAllProjects } from '../data/projects'
 import IntroSequence from 'components/IntroSequence.vue'
+import { useIntroStore } from 'stores/intro-store'
 
 const { t } = useI18n()
 const projects = computed(() => getAllProjects())
+const introStore = useIntroStore()
 
 // Setup page meta
 useMeta({
@@ -118,10 +120,11 @@ useMeta({
 })
 
 // Intro sequence state
-const introComplete = ref(false)
+const introComplete = ref(introStore.hasSeenIntro)
 
 const handleIntroComplete = () => {
   introComplete.value = true
+  introStore.completeIntro()
   // Start hero animation after intro completes
   setTimeout(() => {
     animateHeroLetters()
@@ -166,6 +169,17 @@ const getProjectImage = (project) => {
   }
   return null
 }
+
+watch(
+  () => introStore.hasSeenIntro,
+  (newVal) => {
+    if (newVal) {
+      introComplete.value = true
+      animateHeroLetters()
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped lang="scss">

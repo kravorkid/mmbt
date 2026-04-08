@@ -127,10 +127,8 @@ const handleEnter = () => {
   isExiting.value = true
 
   // Wait for exit animation, then emit complete
-  setTimeout(() => {
-    visible.value = false
-    emit('complete')
-  }, 800)
+  visible.value = false
+  emit('complete')
 }
 
 const handleButtonHover = () => {
@@ -233,7 +231,7 @@ const handleButtonLeave = () => {
   font-weight: 900;
   font-size: 20rem;
   line-height: 1;
-  letter-spacing: 1rem;
+  letter-spacing: -0.05rem;
   text-transform: uppercase;
   user-select: none;
   animation: intro-text-animation 3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;

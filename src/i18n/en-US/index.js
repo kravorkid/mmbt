@@ -20,4 +20,11 @@ export default {
     heroLine3: 'OF CHAOS.',
     searchPlaceholder: 'search...',
   },
+
+  contact: {
+    title: 'CONTACT US',
+    phone: '+33 6 46 67 31 83',
+    email: 'HELLO\\@MMBT.COM',
+    tagline: 'never force, always flow',
+  },
 }
