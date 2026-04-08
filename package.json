@@ -12,9 +12,11 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "postinstall": "quasar prepare"
+    "postinstall": "quasar prepare",
+    "start": "quasar serve dist/spa"
   },
   "dependencies": {
+    "@quasar/cli": "^4.0.0",
     "@quasar/extras": "^1.16.4",
     "pinia": "^3.0.1",
     "quasar": "^2.16.0",
