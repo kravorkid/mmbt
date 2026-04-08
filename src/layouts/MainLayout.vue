@@ -1,102 +1,219 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
+  <q-layout view="hHh LpR fFf">
+    <transition
+      appear
+      enter-active-class="animated fadeInDown"
+      leave-active-class="animated fadeOutUp"
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+      <q-header class="mmbt-header">
+        <div class="container">
+          <q-toolbar class="mmbt-toolbar items-start">
+            <q-toolbar-title class="mmbt-logo">
+              <router-link to="/" class="mmbt-logo-link">
+                <img src="~assets/logo.png" alt="MMBT" class="mmbt-logo-image" />
+              </router-link>
+            </q-toolbar-title>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+            <!-- Desktop Navigation -->
+            <nav class="mmbt-nav gt-sm">
+              <router-link to="/projects/mmbt" class="mmbt-nav-link">
+                {{ $t('nav.about') }}
+              </router-link>
+              <span class="mmbt-nav-separator">/</span>
+              <router-link to="/contact" class="mmbt-nav-link">
+                {{ $t('nav.contact') }}
+              </router-link>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <q-btn
+              flat
+              dense
+              round
+              icon="menu"
+              class="lt-md"
+              @click="drawerOpen = !drawerOpen"
+              color="black"
+            />
+          </q-toolbar>
+        </div>
+      </q-header>
+    </transition>
+
+    <!-- Mobile Drawer -->
+    <q-drawer
+      v-model="drawerOpen"
+      side="right"
+      overlay
+      behavior="mobile"
+      :width="280"
+      class="mmbt-drawer"
+    >
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <q-btn flat dense round icon="close" @click="drawerOpen = false" color="black" />
+        </div>
+
+        <nav class="drawer-nav">
+          <router-link to="/projects/mmbt" class="drawer-nav-link" @click="drawerOpen = false">
+            {{ $t('nav.about') }}
+          </router-link>
+          <router-link to="/contact" class="drawer-nav-link" @click="drawerOpen = false">
+            {{ $t('nav.contact') }}
+          </router-link>
+        </nav>
+      </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition
+          appear
+          enter-active-class="animated fadeInRight"
+          leave-active-class="animated fadeOutLeft"
+          mode="out-in"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </q-page-container>
+    <q-footer>
+      <AppFooter />
+    </q-footer>
   </q-layout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import AppFooter from 'components/AppFooter.vue'
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+const drawerOpen = ref(false)
 </script>
+
+<style scoped lang="scss">
+.mmbt-header {
+  background: $mmbt-beige;
+  box-shadow: none;
+}
+
+.mmbt-toolbar {
+  padding: 0rem;
+  min-height: auto;
+}
+
+.mmbt-logo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex: 0 0 auto;
+  margin-right: auto;
+}
+
+.mmbt-logo-link {
+  color: $mmbt-black;
+  text-decoration: none;
+  display: inline-block;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.mmbt-logo-image {
+  height: 2.5rem;
+  width: auto;
+  display: block;
+}
+
+.mmbt-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.mmbt-nav-link {
+  color: $mmbt-black;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &.router-link-active {
+    font-weight: 700;
+  }
+}
+
+.mmbt-nav-separator {
+  color: $mmbt-black;
+  user-select: none;
+}
+
+// Mobile Drawer Styles
+.mmbt-drawer {
+  background: $mmbt-beige;
+  border-left: 2px solid $mmbt-black;
+}
+
+.drawer-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.drawer-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: $mmbt-black;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.drawer-nav-link {
+  color: $mmbt-black;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 0;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    letter-spacing: 0.1em;
+    border-bottom-color: $mmbt-black;
+  }
+
+  &.router-link-active {
+    font-weight: 900;
+    border-bottom-color: $mmbt-black;
+  }
+}
+
+.drawer-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 2px solid $mmbt-black;
+}
+</style>
